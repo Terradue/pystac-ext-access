@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/pystac-ext-access/explanation/architecture/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Architecture - Access pystac extension</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Architecture";
+        var mkdocs_page_input_path = "explanation/architecture.md";
+        var mkdocs_page_url = "/pystac-ext-access/explanation/architecture/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Access pystac extension
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-steps/">First steps</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/install/">Install</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/use-extension/">Work with access metadata</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/fields/">Access fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/api/">Python API</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Architecture</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#access-conditions-and-availability">Access conditions and availability</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-access-fits-with-other-stac-metadata">How Access fits with other STAC metadata</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#package-structure">Package structure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#metadata-storage">Metadata storage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#validation-boundaries">Validation boundaries</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#schema-versions-and-generated-code">Schema versions and generated code</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Access pystac extension</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Explanation</li>
+      <li class="breadcrumb-item active">Architecture</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/pystac-ext-access/edit/main/docs/explanation/architecture.md">Edit on pystac-ext-access</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!--
+Copyright 2026 Terradue
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<h1 id="scope-architecture-and-validation">Scope, architecture, and validation<a class="headerlink" href="#scope-architecture-and-validation" title="Permanent link">&para;</a></h1>
+<h2 id="access-conditions-and-availability">Access conditions and availability<a class="headerlink" href="#access-conditions-and-availability" title="Permanent link">&para;</a></h2>
+<p>The upstream specification separates <a href="https://github.com/stac-extensions/access#accesstype">access barriers</a> from <a href="https://github.com/stac-extensions/access#accessavailability">availability</a>. A dataset may require approval yet be ready to download, or be open to everyone but need retrieval first.</p>
+<p>Availability describes the client's workflow, rather than the storage technology:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>What the client needs to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>online</code></td>
+<td>Download the data directly.</td>
+</tr>
+<tr>
+<td><code>nearline</code></td>
+<td>Request the download and wait while that request triggers retrieval; no separate order is needed.</td>
+</tr>
+<tr>
+<td><code>offline</code></td>
+<td>Explicitly initiate retrieval, for example through an order, before downloading.</td>
+</tr>
+</tbody>
+</table>
+<p><code>access:retrieval_time</code> estimates the wait for nearline or offline data. The specification says to ignore it for online data.</p>
+<h2 id="how-access-fits-with-other-stac-metadata">How Access fits with other STAC metadata<a class="headerlink" href="#how-access-fits-with-other-stac-metadata" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/stac-extensions/access#relationship-with-other-extensions">upstream guidance</a> distinguishes several responsibilities:</p>
+<ul>
+<li><strong>Access</strong> describes eligibility, barriers, instructions, and availability.</li>
+<li><strong>Authentication</strong> describes the technical authentication process, such as token endpoints and OAuth flows.</li>
+<li><strong>Order</strong> describes a transaction, such as retrieving an offline product.</li>
+<li><strong>License</strong> describes permitted uses of the data after access is obtained; it does not replace access conditions.</li>
+</ul>
+<p>For example, registration instructions belong in Access metadata, while the protocol for obtaining a token belongs in the Authentication extension. Links can direct users to registration, access-request, payment, or terms-of-service pages using the specification's <a href="https://github.com/stac-extensions/access#relation-types">relation types</a>.</p>
+<h2 id="package-structure">Package structure<a class="headerlink" href="#package-structure" title="Permanent link">&para;</a></h2>
+<p>The distribution is named <code>pystac-ext-access</code>, while the import path is <code>pystac.extensions.access</code>. The package shares PySTAC's extension namespace.</p>
+<p><code>AccessExtension.ext()</code> wraps a Catalog, Collection, Item, Asset, ItemAssetDefinition, or Link. <code>AccessExtension.summaries()</code> wraps Collection summaries. These wrappers update the original objects, which serialize through PySTAC's normal <code>to_dict()</code> method.</p>
+<h2 id="metadata-storage">Metadata storage<a class="headerlink" href="#metadata-storage" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Storage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Item</td>
+<td><code>properties</code></td>
+</tr>
+<tr>
+<td>Catalog or Collection</td>
+<td><code>extra_fields</code>, serialized at the top level</td>
+</tr>
+<tr>
+<td>Asset or Link</td>
+<td><code>extra_fields</code></td>
+</tr>
+<tr>
+<td>ItemAssetDefinition</td>
+<td><code>properties</code></td>
+</tr>
+<tr>
+<td>Collection summaries</td>
+<td><code>summaries</code></td>
+</tr>
+</tbody>
+</table>
+<p>Assets belonging to an Item fall back to the Item's properties when an access field is missing locally. Setters and removal operations change only the asset. Other wrappers do not inherit access fields from their owners or parent catalogs.</p>
+<p>Nested <code>Alternate</code> and <code>AssetFields</code> values preserve JSON members and provide live wrappers over stored dictionaries. They do not resolve URLs or expand templates.</p>
+<h2 id="validation-boundaries">Validation boundaries<a class="headerlink" href="#validation-boundaries" title="Permanent link">&para;</a></h2>
+<p>The wrapper checks supported targets and field names. Type annotations help callers choose values, but setters do not enforce the complete schema. Neither <code>apply()</code> nor <code>to_dict()</code> validates the resulting STAC document. <code>apply()</code> checks names and target compatibility first, then assigns fields; it is not a transactional validation API.</p>
+<p>For full STAC and extension validation, install PySTAC's validation extra:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"pystac[validation]&gt;=1,&lt;2"</span>
+</code></pre></div>
+<p>Then call <code>item.validate()</code> or <code>collection.validate()</code> on a complete STAC object. Validation can retrieve remote schemas, so their URLs must be reachable or supplied through an application-configured validator. For explicit <code>jsonschema</code> validation, enable a <code>FormatChecker</code> with duration support to check <code>access:retrieval_time</code>.</p>
+<p>The repository's schema integrity tests run offline against <code>tests/data/access-schema.json</code>, copied from the upstream <code>main</code> branch. They check Draft 7 schema validity, the extension identifier, valid and invalid field values, nested locations, summaries, and extension serialization. They validate the Access contract alone, rather than the full STAC core schema, and do not detect later upstream changes until the snapshot is refreshed.</p>
+<h2 id="schema-versions-and-generated-code">Schema versions and generated code<a class="headerlink" href="#schema-versions-and-generated-code" title="Permanent link">&para;</a></h2>
+<p>The extension registers <code>https://stac-extensions.github.io/access/v0.1.0/schema.json</code>. <code>has_extension()</code> checks for that exact identifier. The module provides no migration hooks for older or alternative identifiers.</p>
+<p>The Python implementation is generated. Schema-derived changes belong in the authoritative schema and generation workflow; generated classes should not be edited by hand. The field reference documents the currently generated API, including target restrictions and camelCase template properties.</p>
+<p>Access metadata describes availability and conditions of access. Authentication, authorization, payments, and data retrieval remain the responsibility of the application and data provider.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/pystac-ext-access" class="fa fa-code-fork" style="color: #fcfcfc"> pystac-ext-access</a>
+        </span>
+    
+    
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

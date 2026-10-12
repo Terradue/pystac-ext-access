@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/pystac-ext-access/how-to/use-extension/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Work with access metadata - Access pystac extension</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Work with access metadata";
+        var mkdocs_page_input_path = "how-to/use-extension.md";
+        var mkdocs_page_url = "/pystac-ext-access/how-to/use-extension/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Access pystac extension
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-steps/">First steps</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../install/">Install</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Work with access metadata</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#update-or-remove-fields">Update or remove fields</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#read-and-override-asset-fields">Read and override asset fields</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#describe-alternate-access">Describe alternate access</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#extend-a-collection-and-its-item-asset-definitions">Extend a Collection and its item asset definitions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#describe-links-and-templates">Describe links and templates</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-collection-summaries">Set Collection summaries</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/fields/">Access fields</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/api/">Python API</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/architecture/">Architecture</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Access pystac extension</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">How-to guides</li>
+      <li class="breadcrumb-item active">Work with access metadata</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/pystac-ext-access/edit/main/docs/how-to/use-extension.md">Edit on pystac-ext-access</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <!--
+Copyright 2026 Terradue
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<h1 id="work-with-access-metadata">Work with access metadata<a class="headerlink" href="#work-with-access-metadata" title="Permanent link">&para;</a></h1>
+<p>The first examples continue from the Item created in the <a href="../../tutorials/first-steps/">tutorial</a>.</p>
+<h2 id="update-or-remove-fields">Update or remove fields<a class="headerlink" href="#update-or-remove-fields" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">access</span> <span class="o">=</span> <span class="n">AccessExtension</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="n">access</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">availability</span><span class="o">=</span><span class="s2">"online"</span><span class="p">,</span> <span class="n">retrieval_time</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">access</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">"restricted"</span>
+<span class="k">assert</span> <span class="s2">"access:retrieval_time"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">properties</span>
+
+<span class="n">access</span><span class="o">.</span><span class="n">instructions</span> <span class="o">=</span> <span class="s2">"Register, then download the dataset."</span>
+<span class="n">access</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span><span class="s2">"instructions"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="s2">"access:instructions"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">properties</span>
+</code></pre></div>
+<p><code>ext(item)</code> requires the extension to be declared already. Use <code>add_if_missing=True</code> when first attaching it. <code>apply()</code> changes only supplied fields; assigning <code>None</code> removes a field. <code>clear()</code> takes the Python property name, such as <code>retrieval_time</code>, rather than the STAC field name.</p>
+<p>Removing restrictions while keeping <code>type="restricted"</code> produces invalid metadata. Setters do not enforce this relationship; validate the resulting document.</p>
+<h2 id="read-and-override-asset-fields">Read and override asset fields<a class="headerlink" href="#read-and-override-asset-fields" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">asset</span> <span class="o">=</span> <span class="n">pystac</span><span class="o">.</span><span class="n">Asset</span><span class="p">(</span><span class="n">href</span><span class="o">=</span><span class="s2">"https://example.org/data.tif"</span><span class="p">,</span> <span class="n">media_type</span><span class="o">=</span><span class="s2">"image/tiff"</span><span class="p">)</span>
+<span class="n">item</span><span class="o">.</span><span class="n">add_asset</span><span class="p">(</span><span class="s2">"data"</span><span class="p">,</span> <span class="n">asset</span><span class="p">)</span>
+<span class="n">asset_access</span> <span class="o">=</span> <span class="n">AccessExtension</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="n">asset</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">asset_access</span><span class="o">.</span><span class="n">availability</span> <span class="o">==</span> <span class="s2">"online"</span>
+<span class="n">asset_access</span><span class="o">.</span><span class="n">availability</span> <span class="o">=</span> <span class="s2">"offline"</span>
+<span class="k">assert</span> <span class="n">asset</span><span class="o">.</span><span class="n">extra_fields</span><span class="p">[</span><span class="s2">"access:availability"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"offline"</span>
+<span class="k">assert</span> <span class="n">access</span><span class="o">.</span><span class="n">availability</span> <span class="o">==</span> <span class="s2">"online"</span>
+
+<span class="n">asset_access</span><span class="o">.</span><span class="n">availability</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">assert</span> <span class="n">asset_access</span><span class="o">.</span><span class="n">availability</span> <span class="o">==</span> <span class="s2">"online"</span>
+</code></pre></div>
+<p>Attach an asset to its owner before wrapping it. An Item asset reads missing fields from the Item's properties; writes affect the asset only. Removing an override exposes the Item value again. Collection assets have no corresponding fallback.</p>
+<h2 id="describe-alternate-access">Describe alternate access<a class="headerlink" href="#describe-alternate-access" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pystac.extensions.access</span><span class="w"> </span><span class="kn">import</span> <span class="n">Alternate</span>
+
+<span class="n">asset_access</span><span class="o">.</span><span class="n">alternate</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"mirror"</span><span class="p">:</span> <span class="n">Alternate</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span>
+        <span class="s2">"href"</span><span class="p">:</span> <span class="s2">"https://mirror.example.org/data.tif"</span><span class="p">,</span>
+        <span class="s2">"access:type"</span><span class="p">:</span> <span class="s2">"open"</span><span class="p">,</span>
+        <span class="s2">"access:availability"</span><span class="p">:</span> <span class="s2">"online"</span><span class="p">,</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+<span class="k">assert</span> <span class="n">asset</span><span class="o">.</span><span class="n">extra_fields</span><span class="p">[</span><span class="s2">"alternate"</span><span class="p">][</span><span class="s2">"mirror"</span><span class="p">][</span><span class="s2">"access:type"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"open"</span>
+</code></pre></div>
+<p><code>Alternate.create()</code> builds typed access fields. <code>from_dict()</code> also preserves other members such as <code>href</code>. Describing an alternate does not download it.</p>
+<h2 id="extend-a-collection-and-its-item-asset-definitions">Extend a Collection and its item asset definitions<a class="headerlink" href="#extend-a-collection-and-its-item-asset-definitions" title="Permanent link">&para;</a></h2>
+<p>This example is independent of the Item above:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pystac</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pystac.extensions.access</span><span class="w"> </span><span class="kn">import</span> <span class="n">AccessExtension</span>
+
+<span class="n">collection</span> <span class="o">=</span> <span class="n">pystac</span><span class="o">.</span><span class="n">Collection</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">"example-collection"</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">"Example collection with registration requirements"</span><span class="p">,</span>
+    <span class="n">extent</span><span class="o">=</span><span class="n">pystac</span><span class="o">.</span><span class="n">Extent</span><span class="p">(</span>
+        <span class="n">spatial</span><span class="o">=</span><span class="n">pystac</span><span class="o">.</span><span class="n">SpatialExtent</span><span class="p">([[</span><span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">90</span><span class="p">]]),</span>
+        <span class="n">temporal</span><span class="o">=</span><span class="n">pystac</span><span class="o">.</span><span class="n">TemporalExtent</span><span class="p">([[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]),</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+<span class="n">collection_access</span> <span class="o">=</span> <span class="n">AccessExtension</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="n">collection</span><span class="p">,</span> <span class="n">add_if_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">collection_access</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"restricted"</span><span class="p">,</span> <span class="n">restrictions</span><span class="o">=</span><span class="p">[</span><span class="s2">"registration"</span><span class="p">])</span>
+
+<span class="n">collection</span><span class="o">.</span><span class="n">item_assets</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"data"</span><span class="p">:</span> <span class="n">pystac</span><span class="o">.</span><span class="n">ItemAssetDefinition</span><span class="p">({</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"image/tiff"</span><span class="p">,</span> <span class="s2">"roles"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"data"</span><span class="p">]})</span>
+<span class="p">}</span>
+<span class="n">definition</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">item_assets</span><span class="p">[</span><span class="s2">"data"</span><span class="p">]</span>
+<span class="n">definition_access</span> <span class="o">=</span> <span class="n">AccessExtension</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="n">definition</span><span class="p">)</span>
+<span class="n">definition_access</span><span class="o">.</span><span class="n">availability</span> <span class="o">=</span> <span class="s2">"nearline"</span>
+</code></pre></div>
+<p>Catalogs use the same <code>AccessExtension.ext(catalog, add_if_missing=True)</code> entry point. Catalog and Collection access fields are stored at the top level of their serialized documents.</p>
+<h2 id="describe-links-and-templates">Describe links and templates<a class="headerlink" href="#describe-links-and-templates" title="Permanent link">&para;</a></h2>
+<p>Continue with the Collection above:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pystac.extensions.access</span><span class="w"> </span><span class="kn">import</span> <span class="n">Alternate</span><span class="p">,</span> <span class="n">AssetFields</span>
+
+<span class="n">link</span> <span class="o">=</span> <span class="n">pystac</span><span class="o">.</span><span class="n">Link</span><span class="p">(</span><span class="n">rel</span><span class="o">=</span><span class="s2">"enclosure"</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s2">"https://example.org/download"</span><span class="p">)</span>
+<span class="n">collection</span><span class="o">.</span><span class="n">add_link</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+<span class="n">AccessExtension</span><span class="o">.</span><span class="n">ext</span><span class="p">(</span><span class="n">link</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"restricted"</span><span class="p">,</span> <span class="n">restrictions</span><span class="o">=</span><span class="p">[</span><span class="s2">"agreement"</span><span class="p">])</span>
+
+<span class="n">collection_access</span><span class="o">.</span><span class="n">assetTemplates</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"data"</span><span class="p">:</span> <span class="n">AssetFields</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">availability</span><span class="o">=</span><span class="s2">"nearline"</span><span class="p">,</span> <span class="n">retrieval_time</span><span class="o">=</span><span class="s2">"PT1H"</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">collection_access</span><span class="o">.</span><span class="n">linkTemplates</span> <span class="o">=</span> <span class="p">[</span><span class="n">Alternate</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">"open"</span><span class="p">)]</span>
+</code></pre></div>
+<p>Attach a Link to an owner before extending it. <code>assetTemplates</code> and <code>linkTemplates</code> retain their schema-defined camelCase names in the Python API and are supported on Catalogs and Collections. These helpers store metadata; they do not expand templates into assets or links.</p>
+<h2 id="set-collection-summaries">Set Collection summaries<a class="headerlink" href="#set-collection-summaries" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">summaries</span> <span class="o">=</span> <span class="n">AccessExtension</span><span class="o">.</span><span class="n">summaries</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+<span class="n">summaries</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"open"</span><span class="p">,</span> <span class="s2">"restricted"</span><span class="p">]</span>
+<span class="n">summaries</span><span class="o">.</span><span class="n">availability</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"online"</span><span class="p">,</span> <span class="s2">"nearline"</span><span class="p">]</span>
+<span class="n">summaries</span><span class="o">.</span><span class="n">retrieval_time</span> <span class="o">=</span> <span class="n">pystac</span><span class="o">.</span><span class="n">RangeSummary</span><span class="p">(</span><span class="s2">"PT1H"</span><span class="p">,</span> <span class="s2">"P1D"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">collection</span><span class="o">.</span><span class="n">summaries</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s2">"access:retrieval_time"</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span>
+    <span class="s2">"minimum"</span><span class="p">:</span> <span class="s2">"PT1H"</span><span class="p">,</span> <span class="s2">"maximum"</span><span class="p">:</span> <span class="s2">"P1D"</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Summaries describe values across the Collection. They are separate from the Collection's own access fields. Set a summary property to <code>None</code> to remove it. See the <a href="../../reference/fields/#collection-summaries">field reference</a> for supported representations.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../install/" class="btn btn-neutral float-left" title="Install"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../reference/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/pystac-ext-access" class="fa fa-code-fork" style="color: #fcfcfc"> pystac-ext-access</a>
+        </span>
+    
+    
+      <span><a href="../install/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../reference/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
