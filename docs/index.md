@@ -16,7 +16,7 @@ limitations under the License.
 
 # Access PySTAC extension
 
-`pystac-ext-access` reads and writes STAC access metadata using the `access:` prefix. Describe whether data is open or restricted, what users must do to obtain it, and whether it is available immediately.
+`pystac-ext-access` is a `pystac` Python implementation of the [STAC Access Extension Specification](https://github.com/stac-extensions/access), reads and writes STAC access metadata using the `access:` prefix. Describe whether data is open or restricted, what users must do to obtain it, and whether it is available immediately.
 
 Import the API from `pystac.extensions.access`. The implementation uses the [Access v0.1.0 schema identifier](https://stac-extensions.github.io/access/v0.1.0/schema.json). The Python package version is independent of the specification version.
 
