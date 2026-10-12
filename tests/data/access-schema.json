@@ -1,0 +1,247 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/access/v0.1.0/schema.json#",
+  "title": "Access Extension",
+  "description": "STAC Access Extension for STAC Catalogs, STAC Collections and STAC Items.",
+  "type": "object",
+  "required": [
+    "stac_extensions",
+    "type"
+  ],
+  "properties": {
+    "stac_extensions": {
+      "type": "array",
+      "contains": {
+        "const": "https://stac-extensions.github.io/access/v0.1.0/schema.json"
+      }
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Catalog",
+        "Collection",
+        "Feature"
+      ]
+    },
+    "assets": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/assetFields"
+      }
+    },
+    "assetTemplates": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/assetFields"
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/fields"
+      }
+    },
+    "linkTemplates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/fields"
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["type", "properties"],
+      "properties": {
+        "type": {
+          "const": "Feature"
+        },
+        "properties": {
+          "$ref": "#/definitions/fields"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "const": "Collection"
+        },
+        "summaries": {
+          "$ref": "#/definitions/summaries"
+        },
+        "item_assets": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/assetFields"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/fields"
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "const": "Catalog"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/fields"
+        }
+      ]
+    }
+  ],
+  "definitions": {
+    "access:type": {
+      "type": "string",
+      "enum": [
+        "open",
+        "embargoed",
+        "restricted",
+        "closed"
+      ]
+    },
+    "restriction": {
+      "type": "string",
+      "enum": [
+        "registration",
+        "agreement",
+        "data_fee",
+        "transfer_fee",
+        "membership",
+        "approval"
+      ]
+    },
+    "access:restrictions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/definitions/restriction"
+      }
+    },
+    "access:instructions": {
+      "type": "string",
+      "minLength": 1
+    },
+    "access:availability": {
+      "type": "string",
+      "enum": [
+        "online",
+        "nearline",
+        "offline"
+      ]
+    },
+    "access:retrieval_time": {
+      "type": "string",
+      "format": "duration"
+    },
+    "fields": {
+      "type": "object",
+      "properties": {
+        "access:type": {
+          "$ref": "#/definitions/access:type"
+        },
+        "access:restrictions": {
+          "$ref": "#/definitions/access:restrictions"
+        },
+        "access:instructions": {
+          "$ref": "#/definitions/access:instructions"
+        },
+        "access:availability": {
+          "$ref": "#/definitions/access:availability"
+        },
+        "access:retrieval_time": {
+          "$ref": "#/definitions/access:retrieval_time"
+        }
+      },
+      "patternProperties": {
+        "^(?!access:)": {}
+      },
+      "additionalProperties": false,
+      "if": {
+        "required": ["access:type"],
+        "properties": {
+          "access:type": {
+            "const": "restricted"
+          }
+        }
+      },
+      "then": {
+        "required": ["access:restrictions"]
+      }
+    },
+    "assetFields": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/fields"
+        },
+        {
+          "properties": {
+            "alternate": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fields"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "summaries": {
+      "type": "object",
+      "properties": {
+        "access:type": {
+          "type": ["array", "object"],
+          "items": {
+            "$ref": "#/definitions/access:type"
+          }
+        },
+        "access:restrictions": {
+          "type": ["array", "object"],
+          "items": {
+            "$ref": "#/definitions/restriction"
+          }
+        },
+        "access:instructions": {
+          "type": ["array", "object"],
+          "items": {
+            "$ref": "#/definitions/access:instructions"
+          }
+        },
+        "access:availability": {
+          "type": ["array", "object"],
+          "items": {
+            "$ref": "#/definitions/access:availability"
+          }
+        },
+        "access:retrieval_time": {
+          "type": ["array", "object"],
+          "items": {
+            "$ref": "#/definitions/access:retrieval_time"
+          },
+          "properties": {
+            "minimum": {
+              "$ref": "#/definitions/access:retrieval_time"
+            },
+            "maximum": {
+              "$ref": "#/definitions/access:retrieval_time"
+            }
+          }
+        }
+      },
+      "patternProperties": {
+        "^(?!access:)": {}
+      },
+      "additionalProperties": false
+    }
+  }
+}
