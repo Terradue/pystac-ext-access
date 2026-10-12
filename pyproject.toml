@@ -85,7 +85,7 @@ exclude = ["src/pystac/extensions/__init__.py"]
 # ---------------------------------------------------------------------------
 
 [tool.coverage.run]
-source_pkgs = ["pystac/extensions", "tests"]
+source = ["src/pystac/extensions"]
 branch = true
 parallel = true
 omit = [
@@ -124,7 +124,7 @@ dependencies = [
 [tool.hatch.envs.test.scripts]
 test = "pytest {args:tests}"
 testv = "pytest --verbose {args:tests}"
-test-cov = "pytest --cov=pystac/extensions --cov-report=term-missing --cov-report=xml:coverage.xml {args:tests}"
+test-cov = "pytest --cov --cov-config=pyproject.toml --cov-report=term-missing --cov-report=xml:coverage.xml {args:tests}"
 test-show-setup = "pytest --setup-show {args:tests}"
 
 [[tool.hatch.envs.test.matrix]]
