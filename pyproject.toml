@@ -116,7 +116,7 @@ exclude_lines = [
 [tool.hatch.envs.test]
 skip-install = false
 dependencies = [
-  "jsonschema[format-nongpl]>=4.23,<5",
+  "jsonschema[format-nongpl]>=4.26.0,<5",
   "pytest>=9.1.1,<10",
   "pytest-cov>=7.1.0,<8",
 ]
@@ -152,7 +152,7 @@ xfail_strict = true
 [tool.hatch.envs.dev]
 skip-install = false
 dependencies = [
-  "jsonschema[format-nongpl]>=4.23,<5",
+  "jsonschema[format-nongpl]>=4.26.0,<5",
   "types-jsonschema>=4.23,<5",
   "mypy>=2.3.1",
   # Keep pandas stubs aligned with pandas 2.3 and Python 3.10 support.
@@ -320,7 +320,7 @@ check = [
 # Preserve editable-install test extras and uv's local wheel resolution.
 [project.optional-dependencies]
 test = [
-  "jsonschema[format-nongpl]>=4.23,<5",
+  "jsonschema[format-nongpl]>=4.26.0,<5",
   "pytest>=9.1.1,<10",
   "pytest-cov>=7.1.0,<8"
 ]
